@@ -5,26 +5,21 @@ import java.util.Scanner;
 
 public class max_subarray_2 {
 
-    public static int calculate(int[] numbers,int n){
+    public static int calculate(int[] nums,int n){
         int[] prefix = new int[n];
-        prefix[0] = numbers[0];
+        int current_sum = 0;
+        prefix[0] = nums[0];
         for(int i=1;i<n;i++){
-           prefix[i] = prefix[i-1] + numbers[i];
+           prefix[i] = prefix[i-1] + nums[i];
         }
         int max_sum = Integer.MIN_VALUE;
         
-        for(int i=0;i<n;i++){
-            int current_sum = 0;
-            for(int j=i;j<n;j++){
-                if(i==0){
-                    current_sum = prefix[j];
-                }
-                else{
-                current_sum = prefix[j] - prefix[i-1];
-                }
-            }
-            if(current_sum>max_sum){
+        for(int i=0;i<nums.length;i++){
+            for(int j=i ; j<nums.length; j++){
+                current_sum = i == 0? prefix[j] : prefix[j] - prefix[i-1];
+                if(max_sum < current_sum){
                 max_sum = current_sum;
+                }
             }
         }
         return max_sum;
